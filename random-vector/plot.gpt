@@ -1,0 +1,22 @@
+
+set terminal pdf enhanced font "Arial,12"
+set output "cums.pdf"
+
+set xlabel "Absolute dot product"
+set ylabel "Cumulative probabilty"
+
+plot "642_dim.cum" u 1:2 lw 4 notitle w l
+
+set output "dists.pdf"
+set ylabel "Probability"
+
+plot "642_dim.hist" u 1:2 lw 4 notitle w l
+
+set output "log_dists.pdf"
+set logscale y
+plot "642_dim.hist" u 1:2 lw 4 notitle w l
+
+set yrange[0.1:1.1]
+set output "log_cums.pdf"
+set ylabel "Cumulative probabilty"
+plot "642_dim.cum" u 1:2 lw 4 notitle w l

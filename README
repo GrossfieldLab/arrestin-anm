@@ -41,3 +41,8 @@ The python programs should be run in numerical order
 07_mode_compare.py accepts aa_number.csv and ./output/vsa/ as inputs and outputs files to ./output/modes/. This file is used to make Figure 4.
 
 08_per_resi_dot_product.py accepts aa_number.csv, ./input/structure/, and ./output/vsa/ and outputs to ./output/bfactor/. This program uses the command "python 08_per_resi_dot_product.py [filename]" where filename is the name of the run which is being used.  Inside of the python file is a list of structures for cluster 1 and cluster 2. This file is used to output the Per Residue Dot Product result and generates a PBD file with the bfactors edited to allowed for easy visualization. This file was sued to generate Figures 5 and 6. For Figure 5 the cluster array marked Apo was used for cluster_1 and Active was used for cluster_2. For Figure 6 the cluster array marked Apo was used for cluster_1 and clathrin was used for cluster_2.
+
+
+
+The code to make Figure S2 is in the random-vector directory. The
+script run_dot_dist.sh contains the necessary command line.
