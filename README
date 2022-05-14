@@ -1,0 +1,43 @@
+This program will take protein databank (PDB) files and format them for anisotrophic network modelling and covariance compelment analysis.
+
+Requirements:
+Python 3.10.4
+Python packages: os, sys, numpy, math, pyplot
+Lightweight Object-Oriented Structure library (LOOS), available from https://github.com/GrossfieldLab/loos
+
+The programs assume the following directory structure:
+./input/structure/
+./input/structure_anm/
+./input/structure_rmsd/
+./output/coverlap/
+./output/vsa/
+./output/modes/
+./output/bfactor/
+
+All files except for the first require the following input file:
+./output/aa_number.csv
+
+Before you start:
+All files must be downloaded from the PDB, aligned, and the chain of the protein of interest should be set to chain A. In all cases the biological unit should be used and no redundant proteins should be analyzed. 
+
+These aligned and formatted files should then be saved to ./input/structure/
+
+
+Running programs:
+The python programs should be run in numerical order
+
+01_sequence_protein.py rips the sequence and sequence number of all structures in ./input/structure/ and saves them to ./output/sequence.csv and ./output/sequence_number.csv respectively. These two files should then be used to align all sequences and select a set of common residues for all structures. All unstructured loops should also be removed at this time. These files should be used to make the input file, aa_number.csv. This input file will be used for all other programs in this file.
+
+02_structure_rip.py accepts aa_number.csv and ./input/structure/ as inputs and outputs PDB structures which will be used for anisotrophic network modelling (ANM) and RMSD analysis. These structures are written to ./input/structure_anm/ and ./input/structure_rmsd/ respectively.
+
+03_vsarun.py uses LOOS and assumes the commands for LOOS are run from /opt/LOOS/bin/. It accepts aa_number.csv and ./input/structure_anm/ as an input and outputs ANM eigenvector and eigenvalue files to ./output/vsa/
+
+04_coverlap.py uses LOOS assumes the commands for LOOS are run from /opt/LOOS/bin/. It accepts aa_number.csv and ./output/vsa/ as an input and outputs raw covariance overlap outputs to ./output/coverlap/
+
+05_compile_coverlap.py accepts aa_number.csv and ./output/coverlap/ as inputs and outputs covariance complement to ./output/coverlap.csv and a visual heatmap of all structures to ./output/cov_heatmap.png. This file is used to make Figure 3 B.
+
+06_rmsd.py accepts aa_number.csv and ./input/structure_rmsd/ as inputs and outputs results of RMSD to ./output/rmsd.csv and a heatmap ./output/rmsd_heatmap.png. This file is used to make Figure 3 A
+
+07_mode_compare.py accepts aa_number.csv and ./output/vsa/ as inputs and outputs files to ./output/modes/. This file is used to make Figure 4.
+
+08_per_resi_dot_product.py accepts aa_number.csv, ./input/structure/, and ./output/vsa/ and outputs to ./output/bfactor/. This program uses the command "python 08_per_resi_dot_product.py [filename]" where filename is the name of the run which is being used.  Inside of the python file is a list of structures for cluster 1 and cluster 2. This file is used to output the Per Residue Dot Product result and generates a PBD file with the bfactors edited to allowed for easy visualization. This file was sued to generate Figures 5 and 6. For Figure 5 the cluster array marked Apo was used for cluster_1 and Active was used for cluster_2. For Figure 6 the cluster array marked Apo was used for cluster_1 and clathrin was used for cluster_2.
